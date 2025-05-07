@@ -13,6 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface SidebarProps {
@@ -47,43 +48,45 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             {section.items.map((item) => {
               const isActive = pathname === item.path;
               return (
-                <ListItem key={item.text} disablePadding>
-                  <ListItemButton
-                    selected={isActive}
-                    sx={{
-                      "&.Mui-selected": {
-                        bgcolor: "action.selected",
-                        color: "primary.main",
-                        "&:hover": {
-                          bgcolor: "action.selected",
-                        },
-                        "& .MuiListItemIcon-root": {
-                          color: "primary.main",
-                        },
-                      },
-                      "&:hover": {
-                        bgcolor: "action.hover",
-                      },
-                    }}
-                  >
-                    <ListItemIcon
+                <Link key={item.text} href={item.path}>
+                  <ListItem disablePadding>
+                    <ListItemButton
+                      selected={isActive}
                       sx={{
-                        color: isActive ? "primary.main" : "text.secondary",
-                        minWidth: "40px",
+                        "&.Mui-selected": {
+                          bgcolor: "action.selected",
+                          color: "primary.main",
+                          "&:hover": {
+                            bgcolor: "action.selected",
+                          },
+                          "& .MuiListItemIcon-root": {
+                            color: "primary.main",
+                          },
+                        },
+                        "&:hover": {
+                          bgcolor: "action.hover",
+                        },
                       }}
                     >
-                      {item.icon}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.text}
-                      sx={{
-                        "& .MuiTypography-root": {
-                          fontWeight: isActive ? 600 : 400,
-                        },
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
+                      <ListItemIcon
+                        sx={{
+                          color: isActive ? "primary.main" : "text.secondary",
+                          minWidth: "40px",
+                        }}
+                      >
+                        {item.icon}
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={item.text}
+                        sx={{
+                          "& .MuiTypography-root": {
+                            fontWeight: isActive ? 600 : 400,
+                          },
+                        }}
+                      />
+                    </ListItemButton>
+                  </ListItem>
+                </Link>
               );
             })}
           </List>
