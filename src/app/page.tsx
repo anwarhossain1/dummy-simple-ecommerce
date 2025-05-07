@@ -1,10 +1,10 @@
-'use client';
-import { Button, Container, Typography } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+"use client";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Button, Container, Typography } from "@mui/material";
 
 export default function Home() {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <Typography variant="h1" component="h1" gutterBottom>
         Welcome to our store
       </Typography>
