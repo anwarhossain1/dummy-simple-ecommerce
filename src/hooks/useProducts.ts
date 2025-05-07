@@ -19,9 +19,11 @@ interface UseProductsReturn {
   products: Product[];
   loading: boolean;
   error: Error | null;
+  handleSearchedProducts: (searchTerm: string) => void;
 }
 
 export const useProducts = (): UseProductsReturn => {
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -37,6 +39,7 @@ export const useProducts = (): UseProductsReturn => {
         }
         const data = await response.json();
         setProducts(data);
+        setAllProducts(data);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("An error occurred"));
       } finally {
@@ -47,5 +50,16 @@ export const useProducts = (): UseProductsReturn => {
     fetchProducts();
   }, []);
 
-  return { products, loading, error };
+  const handleSearchedProducts = (searchTerm: string) => {
+    console.log(searchTerm);
+    if (!searchTerm) return setProducts(allProducts);
+    const filteredProducts = products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setProducts(filteredProducts);
+  };
+
+  return { products, loading, error, handleSearchedProducts };
 };

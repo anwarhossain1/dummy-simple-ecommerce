@@ -34,32 +34,35 @@ const ProductTable = ({ products }: ProductTableProps) => {
           {products.map((product) => (
             <TableRow
               key={product.id}
-              component={Link}
-              href={`/products/${product.slug}`}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
-                cursor: "pointer",
                 "&:hover": {
                   backgroundColor: "action.hover",
                 },
                 transition: "background-color 0.2s",
-                textDecoration: "none",
-                color: "inherit",
-                display: "table-row",
               }}
             >
               <TableCell>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                  <Box sx={{ position: "relative", width: 60, height: 60 }}>
-                    <Image
-                      src={product.images[0]}
-                      alt={product.title}
-                      fill
-                      style={{ objectFit: "cover", borderRadius: "4px" }}
-                    />
+                <Link
+                  href={`/products/${product.slug}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    display: "block",
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Box sx={{ position: "relative", width: 60, height: 60 }}>
+                      <Image
+                        src={product.images[0]}
+                        alt={product.title}
+                        fill
+                        style={{ objectFit: "cover", borderRadius: "4px" }}
+                      />
+                    </Box>
+                    <Typography>{product.title}</Typography>
                   </Box>
-                  <Typography>{product.title}</Typography>
-                </Box>
+                </Link>
               </TableCell>
               <TableCell>{product.category.name}</TableCell>
               <TableCell align="right">${product.price}</TableCell>
