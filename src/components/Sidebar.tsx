@@ -13,6 +13,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { usePathname } from "next/navigation";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ const drawerWidth = 240;
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const pathname = usePathname();
 
   const drawerContent = (
     <Box sx={{ mt: 8 }}>
@@ -42,21 +44,48 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             {section.section}
           </Typography>
           <List disablePadding>
-            {section.items.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon
+            {section.items.map((item) => {
+              const isActive = pathname === item.path;
+              return (
+                <ListItem key={item.text} disablePadding>
+                  <ListItemButton
+                    selected={isActive}
                     sx={{
-                      color: "inherit",
-                      minWidth: "40px",
+                      "&.Mui-selected": {
+                        bgcolor: "action.selected",
+                        color: "primary.main",
+                        "&:hover": {
+                          bgcolor: "action.selected",
+                        },
+                        "& .MuiListItemIcon-root": {
+                          color: "primary.main",
+                        },
+                      },
+                      "&:hover": {
+                        bgcolor: "action.hover",
+                      },
                     }}
                   >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+                    <ListItemIcon
+                      sx={{
+                        color: isActive ? "primary.main" : "text.secondary",
+                        minWidth: "40px",
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={item.text}
+                      sx={{
+                        "& .MuiTypography-root": {
+                          fontWeight: isActive ? 600 : 400,
+                        },
+                      }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              );
+            })}
           </List>
           <Divider sx={{ my: 1 }} />
         </Box>
