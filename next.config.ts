@@ -1,6 +1,20 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    domains: [
+      "placehold.co",
+      "www.google.com",
+      "www.pexels.com",
+      "www.shutterstock.com",
+      "static.vecteezy.com",
+      "api.lorem.space",
+      "placeimg.com",
+      "picsum.photos",
+      "api.escuelajs.co",
+      "cdn.lorem.space",
+    ],
+  },
   async redirects() {
     return [
       {

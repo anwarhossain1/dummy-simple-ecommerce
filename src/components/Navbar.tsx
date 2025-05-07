@@ -1,8 +1,16 @@
-'use client';
-import { AppBar, Toolbar, Typography, IconButton, Box, useTheme } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+"use client";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  AppBar,
+  Box,
+  IconButton,
+  Toolbar,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { useRouter } from "next/navigation";
 
 interface NavbarProps {
   toggleSidebar: () => void;
@@ -10,15 +18,16 @@ interface NavbarProps {
 
 const Navbar = ({ toggleSidebar }: NavbarProps) => {
   const theme = useTheme();
+  const router = useRouter();
 
   return (
-    <AppBar 
-      position="fixed" 
+    <AppBar
+      position="fixed"
       sx={{
         zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: 'background.paper',
-        color: 'text.primary',
-        boxShadow: 2
+        backgroundColor: "background.default",
+        color: "text.primary",
+        boxShadow: 1,
       }}
     >
       <Toolbar>
@@ -26,14 +35,27 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           color="inherit"
           edge="start"
           onClick={toggleSidebar}
-          sx={{ mr: 2, display: { sm: 'none' } }}
+          sx={{ mr: 2, display: { sm: "none" } }}
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            cursor: "pointer",
+            "&:hover": {
+              color: "primary.main",
+            },
+          }}
+          onClick={() => router.push("/")}
+        >
           E-Commerce
         </Typography>
-        <Box sx={{ display: 'flex', gap: 1 }}>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
           <IconButton color="inherit">
             <ShoppingCartIcon />
           </IconButton>

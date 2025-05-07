@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
   const drawerContent = (
     <Box sx={{ mt: 8 }}>
-      {menuItems.map((section) => (
+      {menuItems.map((section, index) => (
         <Box key={section.section}>
           <Typography
             variant="overline"
@@ -87,7 +87,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
               );
             })}
           </List>
-          <Divider sx={{ my: 1 }} />
+          {index < menuItems.length - 1 && <Divider sx={{ my: 1 }} />}
         </Box>
       ))}
     </Box>
@@ -105,6 +105,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             "& .MuiDrawer-paper": {
               width: drawerWidth,
               boxSizing: "border-box",
+              backgroundColor: "background.default",
             },
           }}
         >
@@ -119,6 +120,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
             "& .MuiDrawer-paper": {
               width: drawerWidth,
               boxSizing: "border-box",
+              backgroundColor: "background.default",
             },
           }}
         >
