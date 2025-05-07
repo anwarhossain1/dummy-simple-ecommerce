@@ -29,8 +29,6 @@ const LimitSelect = ({ value, onChange }: LimitSelectProps) => {
       >
         <MenuItem value={10}>10</MenuItem>
         <MenuItem value={15}>15</MenuItem>
-        <MenuItem value={20}>20</MenuItem>
-        <MenuItem value={25}>25</MenuItem>
       </Select>
     </FormControl>
   );

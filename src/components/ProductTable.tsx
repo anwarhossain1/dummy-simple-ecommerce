@@ -19,10 +19,50 @@ interface ProductTableProps {
 
 const ProductTable = ({ products }: ProductTableProps) => {
   return (
-    <TableContainer sx={{ mt: 2 }}>
-      <Table sx={{ minWidth: 650 }} aria-label="products table">
+    <TableContainer
+      sx={{
+        mt: 2,
+        height: "65vh",
+        overflow: "auto",
+        "&::-webkit-scrollbar": {
+          width: "8px",
+          height: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "rgba(0,0,0,0.05)",
+          borderRadius: "4px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "rgba(0,0,0,0.15)",
+          borderRadius: "4px",
+          "&:hover": {
+            backgroundColor: "rgba(0,0,0,0.25)",
+          },
+        },
+        "& .MuiTableContainer-root": {
+          overflow: "auto",
+        },
+        "& thead th": {
+          position: "sticky",
+          top: 0,
+          backgroundColor: "background.default",
+          zIndex: 1,
+        },
+      }}
+    >
+      <Table
+        sx={{
+          minWidth: 650,
+          // Ensure table cells don't wrap
+          "& td, & th": {
+            whiteSpace: "nowrap",
+          },
+        }}
+        stickyHeader
+        aria-label="products table"
+      >
         <TableHead>
-          <TableRow sx={{ backgroundColor: "background.default" }}>
+          <TableRow>
             <TableCell sx={{ fontWeight: "bold" }}>Product</TableCell>
             <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
             <TableCell align="right" sx={{ fontWeight: "bold" }}>
