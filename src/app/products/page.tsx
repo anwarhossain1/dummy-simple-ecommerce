@@ -39,7 +39,7 @@ const Index = () => {
       </Box>
     );
   if (error) return <div>Error: {error.message}</div>;
-  const totalPages = Math.ceil(products.length / limit);
+  const totalPages = Math.ceil(50 / limit);
 
   return (
     <Container maxWidth="lg">
@@ -71,8 +71,8 @@ const Index = () => {
         <Grid size={{ xs: 6 }}>
           <Pagination
             count={totalPages}
-            page={offset}
-            onChange={(_, newPage) => setOffset(newPage)}
+            page={offset + 1}
+            onChange={(_, newPage) => setOffset(newPage - 1)}
             color="primary"
             shape="rounded"
           />
