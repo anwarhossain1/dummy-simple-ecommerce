@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     domains: [
+      "i.imgur.com",
       "placehold.co",
       "www.google.com",
       "www.pexels.com",

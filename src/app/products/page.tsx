@@ -2,6 +2,7 @@
 import LimitSelect from "@/components/LimitSelect";
 import ProductTable from "@/components/ProductTable";
 import SearchInput from "@/components/SearchInput";
+import Sorting from "@/components/Sorting";
 import { useProducts } from "@/hooks/useProducts";
 import {
   Box,
@@ -23,6 +24,7 @@ const Index = () => {
     setOffset,
     limit,
     setLimit,
+    handleSorting,
   } = useProducts();
 
   if (loading)
@@ -61,7 +63,16 @@ const Index = () => {
             }}
           />
         </Grid>
-        <Grid size={{ xs: 6 }}>filter</Grid>
+        <Grid
+          size={{ xs: 6 }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Sorting handleSorting={handleSorting} />
+        </Grid>
         <Grid size={{ xs: 12 }}>
           <ProductTable products={products} />
         </Grid>
