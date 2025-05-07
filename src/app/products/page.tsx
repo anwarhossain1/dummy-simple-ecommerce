@@ -1,4 +1,5 @@
 "use client";
+import LimitSelect from "@/components/LimitSelect";
 import ProductTable from "@/components/ProductTable";
 import SearchInput from "@/components/SearchInput";
 import { useProducts } from "@/hooks/useProducts";
@@ -7,12 +8,22 @@ import {
   CircularProgress,
   Container,
   Grid,
+  Pagination,
   Paper,
   Typography,
 } from "@mui/material";
 
 const Index = () => {
-  const { products, loading, error, handleSearchedProducts } = useProducts();
+  const {
+    products,
+    loading,
+    error,
+    handleSearchedProducts,
+    offset,
+    setOffset,
+    limit,
+    setLimit,
+  } = useProducts();
 
   if (loading)
     return (
@@ -28,6 +39,7 @@ const Index = () => {
       </Box>
     );
   if (error) return <div>Error: {error.message}</div>;
+  const totalPages = Math.ceil(products.length / limit);
 
   return (
     <Container maxWidth="lg">
@@ -43,7 +55,7 @@ const Index = () => {
         <Grid size={{ xs: 6 }}>
           {" "}
           <SearchInput
-            placeholder="Search products by title/desription..."
+            placeholder="Search products by title/description..."
             onSearch={(value) => {
               handleSearchedProducts(value);
             }}
@@ -52,6 +64,18 @@ const Index = () => {
         <Grid size={{ xs: 6 }}>filter</Grid>
         <Grid size={{ xs: 12 }}>
           <ProductTable products={products} />
+        </Grid>
+        <Grid size={{ xs: 6 }}>
+          <LimitSelect value={limit} onChange={(value) => setLimit(value)} />
+        </Grid>
+        <Grid size={{ xs: 6 }}>
+          <Pagination
+            count={totalPages}
+            page={offset}
+            onChange={(_, newPage) => setOffset(newPage)}
+            color="primary"
+            shape="rounded"
+          />
         </Grid>
       </Grid>
     </Container>

@@ -20,11 +20,17 @@ interface UseProductsReturn {
   loading: boolean;
   error: Error | null;
   handleSearchedProducts: (searchTerm: string) => void;
+  offset: number;
+  setOffset: (offset: number) => void;
+  limit: number;
+  setLimit: (limit: number) => void;
 }
 
 export const useProducts = (): UseProductsReturn => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [offset, setOffset] = useState(0); // Add offset state
+  const [limit, setLimit] = useState(10);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -32,7 +38,7 @@ export const useProducts = (): UseProductsReturn => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_API_URL}/products`
+          `${process.env.NEXT_PUBLIC_BASE_API_URL}/products?offset=${offset}&limit=${limit}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch products");
@@ -48,7 +54,7 @@ export const useProducts = (): UseProductsReturn => {
     };
 
     fetchProducts();
-  }, []);
+  }, [limit, offset]);
 
   const handleSearchedProducts = (searchTerm: string) => {
     console.log(searchTerm);
@@ -60,6 +66,14 @@ export const useProducts = (): UseProductsReturn => {
     );
     setProducts(filteredProducts);
   };
-
-  return { products, loading, error, handleSearchedProducts };
+  return {
+    products,
+    loading,
+    error,
+    handleSearchedProducts,
+    offset,
+    setOffset,
+    limit,
+    setLimit,
+  };
 };
