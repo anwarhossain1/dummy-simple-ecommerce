@@ -1,4 +1,4 @@
-import InventoryIcon from "@mui/icons-material/Inventory";
+import { Inventory2Outlined } from "@mui/icons-material";
 
 export interface MenuChild {
   text: string;
@@ -15,7 +15,7 @@ export const menuItems: MenuItem[] = [
   {
     section: "Products",
     items: [
-      { text: "All Products", icon: <InventoryIcon />, path: "/products" },
+      { text: "All Products", icon: <Inventory2Outlined />, path: "/products" },
     ],
   },
 ];

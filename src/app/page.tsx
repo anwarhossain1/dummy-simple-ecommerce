@@ -4,7 +4,7 @@ import { Button, Container, Typography } from "@mui/material";
 
 export default function Home() {
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="lg">
       <Typography variant="h1" component="h1" gutterBottom>
         Welcome to our store
       </Typography>
