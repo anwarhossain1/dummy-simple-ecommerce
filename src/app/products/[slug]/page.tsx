@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import ProductDetails from "./ProductDetails";
 
 interface Props {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getProduct(slug: string) {
