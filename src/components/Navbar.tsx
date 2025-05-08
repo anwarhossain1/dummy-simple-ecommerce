@@ -1,7 +1,5 @@
 "use client";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
   AppBar,
   Box,
@@ -56,12 +54,12 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
         </Typography>
 
         <Box sx={{ display: "flex", gap: 1 }}>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <ShoppingCartIcon />
           </IconButton>
           <IconButton color="inherit">
             <AccountCircleIcon />
-          </IconButton>
+          </IconButton> */}
         </Box>
       </Toolbar>
     </AppBar>
