@@ -1,4 +1,5 @@
 "use client";
+import Filter from "@/components/Filter";
 import LimitSelect from "@/components/LimitSelect";
 import ProductTable from "@/components/ProductTable";
 import SearchInput from "@/components/SearchInput";
@@ -42,7 +43,12 @@ const Index = () => {
     );
   if (error) return <div>Error: {error.message}</div>;
   const totalPages = Math.ceil(50 / limit);
-
+  const handleFilterChange = (filters: {
+    categories: string[];
+    priceRanges: string[];
+  }) => {
+    console.log("Filters changed:", filters);
+  };
   return (
     <Container maxWidth="lg">
       <Typography variant="h5" component="h5" gutterBottom fontWeight={"bold"}>
@@ -69,9 +75,11 @@ const Index = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
+            gap: 2,
           }}
         >
           <Sorting handleSorting={handleSorting} />
+          <Filter onFilterChange={handleFilterChange} products={products} />
         </Grid>
         <Grid size={{ xs: 12 }}>
           <ProductTable products={products} />
