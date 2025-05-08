@@ -88,6 +88,7 @@ const ProductTable = ({ products }: ProductTableProps) => {
                     backgroundColor: "action.hover",
                   },
                   transition: "background-color 0.2s",
+                  cursor: "pointer",
                 }}
               >
                 <TableCell>
@@ -97,6 +98,8 @@ const ProductTable = ({ products }: ProductTableProps) => {
                       textDecoration: "none",
                       color: "inherit",
                       display: "block",
+                      width: "100%",
+                      height: "100%",
                     }}
                   >
                     <Box
@@ -127,14 +130,36 @@ const ProductTable = ({ products }: ProductTableProps) => {
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <Typography variant={isMobile ? "body2" : "body1"}>
-                    {product.category.name}
-                  </Typography>
+                  <Link
+                    href={`/products/${product.slug}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      display: "block",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      {product.category.name}
+                    </Typography>
+                  </Link>
                 </TableCell>
                 <TableCell align="right">
-                  <Typography variant={isMobile ? "body2" : "body1"}>
-                    ${product.price}
-                  </Typography>
+                  <Link
+                    href={`/products/${product.slug}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      display: "block",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <Typography variant={isMobile ? "body2" : "body1"}>
+                      ${product.price}
+                    </Typography>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
