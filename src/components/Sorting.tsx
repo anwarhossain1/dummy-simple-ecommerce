@@ -18,12 +18,17 @@ export default function Sorting({
   useEffect(() => {
     handleSorting(sortField, sortDirection);
   }, [sortField, sortDirection]);
+
   const handleSort = (field: SortField) => {
     if (field === sortField) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      const newDirection = sortDirection === "asc" ? "desc" : "asc";
+      setSortDirection(newDirection);
+      localStorage.setItem("sortDirection", newDirection);
     } else {
       setSortField(field);
       setSortDirection("asc");
+      localStorage.setItem("sortField", field);
+      localStorage.setItem("sortDirection", "asc");
     }
   };
   return (

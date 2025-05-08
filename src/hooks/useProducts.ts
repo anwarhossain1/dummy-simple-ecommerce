@@ -29,6 +29,26 @@ interface UseProductsReturn {
   handleSorting: (sortField: SortField, sortDirection: SortDirection) => void;
 }
 
+const getSortedProducts = (
+  products: Product[],
+  sortField: SortField,
+  sortDirection: SortDirection
+) => {
+  if (sortField === "title") {
+    return [...products].sort((a, b) =>
+      sortDirection === "asc"
+        ? a.title.localeCompare(b.title)
+        : b.title.localeCompare(a.title)
+    );
+  }
+  if (sortField === "price") {
+    return [...products].sort((a, b) =>
+      sortDirection === "asc" ? a.price - b.price : b.price - a.price
+    );
+  }
+  return products;
+};
+
 export const useProducts = (): UseProductsReturn => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
@@ -48,8 +68,20 @@ export const useProducts = (): UseProductsReturn => {
           throw new Error("Failed to fetch products");
         }
         const data = await response.json();
-        setProducts(data);
-        setAllProducts(data);
+        if (data.length > 0) {
+          const savedSortField =
+            (localStorage.getItem("sortField") as SortField) || "title";
+          const savedSortDirection =
+            (localStorage.getItem("sortDirection") as SortDirection) || "asc";
+
+          setProducts(
+            getSortedProducts(data, savedSortField, savedSortDirection)
+          );
+          setAllProducts(
+            getSortedProducts(data, savedSortField, savedSortDirection)
+          );
+          return;
+        }
       } catch (err) {
         setError(err instanceof Error ? err : new Error("An error occurred"));
       } finally {
