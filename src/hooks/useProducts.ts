@@ -52,7 +52,6 @@ const getSortedProducts = (
 export const useProducts = (): UseProductsReturn => {
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
-
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(10);
   const [loading, setLoading] = useState(true);
@@ -106,20 +105,7 @@ export const useProducts = (): UseProductsReturn => {
     sortField: SortField,
     sortDirection: SortDirection
   ) => {
-    const sortedProducts = [...products].sort((a, b) => {
-      const aValue = a[sortField];
-      const bValue = b[sortField];
-      if (typeof aValue === "string" && typeof bValue === "string") {
-        return sortDirection === "asc"
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue);
-      } else {
-        return sortDirection === "asc"
-          ? (aValue as number) - (bValue as number)
-          : (bValue as number) - (aValue as number);
-      }
-    });
-    setProducts(sortedProducts);
+    setProducts(getSortedProducts(products, sortField, sortDirection));
   };
   return {
     products,
