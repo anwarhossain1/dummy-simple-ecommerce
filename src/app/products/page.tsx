@@ -124,7 +124,13 @@ const Index = () => {
         <Grid size={{ xs: 12 }}>
           <ProductTable products={getFilteredProducts()} />
         </Grid>
-        <Grid size={{ xs: 12, sm: 6 }}>
+        <Grid
+          size={{ xs: 12, sm: 6 }}
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "flex-end", sm: "flex-start" },
+          }}
+        >
           <LimitSelect value={limit} onChange={(value) => setLimit(value)} />
         </Grid>
         <Grid
