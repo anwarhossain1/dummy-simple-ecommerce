@@ -52,8 +52,7 @@ const ProductTable = ({ products }: ProductTableProps) => {
     >
       <Table
         sx={{
-          minWidth: 650,
-          // Ensure table cells don't wrap
+          minWidth: { xs: "100%", sm: 650 },
           "& td, & th": {
             whiteSpace: "nowrap",
           },

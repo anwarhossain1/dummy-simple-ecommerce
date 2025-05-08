@@ -49,8 +49,6 @@ const Index = () => {
   const totalPages = Math.ceil(50 / limit);
 
   const getFilteredProducts = () => {
-    console.log("selectedCategories", selectedCategories);
-    console.log("selectedPriceRanges", selectedPriceRanges);
     let filteredProducts = products;
 
     if (selectedCategories.length > 0) {
