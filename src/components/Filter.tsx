@@ -18,19 +18,23 @@ import {
 import { useMemo, useState } from "react";
 
 interface FilterProps {
-  onFilterChange: (filters: {
-    categories: string[];
-    priceRanges: string[];
-  }) => void;
   products: Product[];
+  selectedCategories: string[];
+  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPriceRanges: string[];
+  setSelectedPriceRanges: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const priceRanges = ["0-50", "51-100", "101-200", "201-500", "500+"];
 
-export default function Filter({ onFilterChange, products }: FilterProps) {
+export default function Filter({
+  products,
+  selectedCategories,
+  setSelectedCategories,
+  selectedPriceRanges,
+  setSelectedPriceRanges,
+}: FilterProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
   const [expandedCategory, setExpandedCategory] = useState(true);
   const [expandedPrice, setExpandedPrice] = useState(true);
 
@@ -49,10 +53,6 @@ export default function Filter({ onFilterChange, products }: FilterProps) {
       : [...selectedCategories, category];
 
     setSelectedCategories(updatedCategories);
-    onFilterChange({
-      categories: updatedCategories,
-      priceRanges: selectedPriceRanges,
-    });
   };
 
   const handlePriceRangeChange = (range: string) => {
@@ -61,10 +61,6 @@ export default function Filter({ onFilterChange, products }: FilterProps) {
       : [...selectedPriceRanges, range];
 
     setSelectedPriceRanges(updatedPriceRanges);
-    onFilterChange({
-      categories: selectedCategories,
-      priceRanges: updatedPriceRanges,
-    });
   };
 
   const filterContent = (

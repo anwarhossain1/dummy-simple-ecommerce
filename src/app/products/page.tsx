@@ -3,6 +3,7 @@ import Filter from "@/components/Filter";
 import LimitSelect from "@/components/LimitSelect";
 import ProductTable from "@/components/ProductTable";
 import SearchInput from "@/components/SearchInput";
+import SelectedFilters from "@/components/SelectedFilters";
 import Sorting from "@/components/Sorting";
 import { useProducts } from "@/hooks/useProducts";
 import {
@@ -14,6 +15,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
+import { useState } from "react";
 
 const Index = () => {
   const {
@@ -27,6 +29,8 @@ const Index = () => {
     setLimit,
     handleSorting,
   } = useProducts();
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([]);
 
   if (loading)
     return (
@@ -43,17 +47,43 @@ const Index = () => {
     );
   if (error) return <div>Error: {error.message}</div>;
   const totalPages = Math.ceil(50 / limit);
-  const handleFilterChange = (filters: {
-    categories: string[];
-    priceRanges: string[];
-  }) => {
-    console.log("Filters changed:", filters);
+
+  const getFilteredProducts = () => {
+    console.log("selectedCategories", selectedCategories);
+    console.log("selectedPriceRanges", selectedPriceRanges);
+    let filteredProducts = products;
+
+    if (selectedCategories.length > 0) {
+      filteredProducts = filteredProducts.filter((product) =>
+        selectedCategories.includes(product.category.name)
+      );
+    }
+
+    if (selectedPriceRanges.length > 0) {
+      filteredProducts = filteredProducts.filter((product) => {
+        return selectedPriceRanges.some((range) => {
+          const [min, max] = range.split("-").map(Number);
+          if (max) {
+            return product.price >= min && product.price <= max;
+          } else {
+            return product.price >= min;
+          }
+        });
+      });
+    }
+    return filteredProducts;
   };
   return (
     <Container maxWidth="lg">
       <Typography variant="h5" component="h5" gutterBottom fontWeight={"bold"}>
         Product List
       </Typography>
+      <SelectedFilters
+        selectedCategories={selectedCategories}
+        setSelectedCategories={setSelectedCategories}
+        selectedPriceRanges={selectedPriceRanges}
+        setSelectedPriceRanges={setSelectedPriceRanges}
+      />
       <Grid
         container
         spacing={2}
@@ -61,7 +91,6 @@ const Index = () => {
         sx={{ p: 2, bgcolor: "white", mt: 2 }}
       >
         <Grid size={{ xs: 6 }}>
-          {" "}
           <SearchInput
             placeholder="Search products by title/description..."
             onSearch={(value) => {
@@ -79,10 +108,16 @@ const Index = () => {
           }}
         >
           <Sorting handleSorting={handleSorting} />
-          <Filter onFilterChange={handleFilterChange} products={products} />
+          <Filter
+            products={products}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+            selectedPriceRanges={selectedPriceRanges}
+            setSelectedPriceRanges={setSelectedPriceRanges}
+          />
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <ProductTable products={products} />
+          <ProductTable products={getFilteredProducts()} />
         </Grid>
         <Grid size={{ xs: 6 }}>
           <LimitSelect value={limit} onChange={(value) => setLimit(value)} />
