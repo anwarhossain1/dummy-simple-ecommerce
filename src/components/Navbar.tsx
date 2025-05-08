@@ -35,7 +35,7 @@ const Navbar = ({ toggleSidebar }: NavbarProps) => {
           color="inherit"
           edge="start"
           onClick={toggleSidebar}
-          sx={{ mr: 2, display: { sm: "none" } }}
+          sx={{ mr: 2, display: { md: "none" } }}
         >
           <MenuIcon />
         </IconButton>

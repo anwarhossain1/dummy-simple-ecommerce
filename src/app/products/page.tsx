@@ -94,7 +94,7 @@ const Index = () => {
           justifyContent: "center",
         }}
       >
-        <Grid size={{ xs: 6 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <SearchInput
             placeholder="Search products by title/description..."
             onSearch={(value) => {
@@ -103,7 +103,7 @@ const Index = () => {
           />
         </Grid>
         <Grid
-          size={{ xs: 6 }}
+          size={{ xs: 12, sm: 6 }}
           sx={{
             display: "flex",
             flexDirection: "row",

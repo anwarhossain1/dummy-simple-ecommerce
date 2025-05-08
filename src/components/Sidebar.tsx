@@ -25,7 +25,7 @@ const drawerWidth = 240;
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const pathname = usePathname();
 
   const drawerContent = (
