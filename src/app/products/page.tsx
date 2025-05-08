@@ -84,9 +84,15 @@ const Index = () => {
       />
       <Grid
         container
-        spacing={2}
+        spacing={1}
         component={Paper}
-        sx={{ p: 2, bgcolor: "white", mt: 2 }}
+        sx={{
+          p: 2,
+          bgcolor: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
         <Grid size={{ xs: 6 }}>
           <SearchInput
@@ -102,6 +108,7 @@ const Index = () => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "flex-end",
+            alignItems: "center",
             gap: 2,
           }}
         >

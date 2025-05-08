@@ -37,7 +37,6 @@ export default function Sorting({
         display: "flex",
         flexWrap: "wrap",
         gap: 2,
-        mb: 4,
         alignItems: "center",
       }}
     >
