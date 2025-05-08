@@ -9,6 +9,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,98 +20,128 @@ interface ProductTableProps {
 }
 
 const ProductTable = ({ products }: ProductTableProps) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <TableContainer
+    <Box
       sx={{
-        mt: 2,
-        height: "65vh",
+        width: "100%",
         overflow: "auto",
-        "&::-webkit-scrollbar": {
-          width: "8px",
-          height: "8px",
-        },
-        "&::-webkit-scrollbar-track": {
-          backgroundColor: "rgba(0,0,0,0.05)",
-          borderRadius: "4px",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "rgba(0,0,0,0.15)",
-          borderRadius: "4px",
-          "&:hover": {
-            backgroundColor: "rgba(0,0,0,0.25)",
-          },
-        },
-        "& .MuiTableContainer-root": {
-          overflow: "auto",
-        },
-        "& thead th": {
-          position: "sticky",
-          top: 0,
-          backgroundColor: "background.default",
-          zIndex: 1,
-        },
+        WebkitOverflowScrolling: "touch",
       }}
     >
-      <Table
+      <TableContainer
         sx={{
-          minWidth: { xs: "100%", sm: 650 },
-          "& td, & th": {
-            whiteSpace: "nowrap",
+          mt: 2,
+          height: "65vh",
+          minWidth: isMobile ? "auto" : 650,
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            height: "8px",
+          },
+          "&::-webkit-scrollbar-track": {
+            backgroundColor: "rgba(0,0,0,0.05)",
+            borderRadius: "4px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "rgba(0,0,0,0.15)",
+            borderRadius: "4px",
+            "&:hover": {
+              backgroundColor: "rgba(0,0,0,0.25)",
+            },
           },
         }}
-        stickyHeader
-        aria-label="products table"
       >
-        <TableHead>
-          <TableRow>
-            <TableCell sx={{ fontWeight: "bold" }}>Product</TableCell>
-            <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
-            <TableCell align="right" sx={{ fontWeight: "bold" }}>
-              Price
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {products.map((product) => (
-            <TableRow
-              key={product.id}
-              sx={{
-                "&:last-child td, &:last-child th": { border: 0 },
-                "&:hover": {
-                  backgroundColor: "action.hover",
-                },
-                transition: "background-color 0.2s",
-              }}
-            >
-              <TableCell>
-                <Link
-                  href={`/products/${product.slug}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    display: "block",
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Box sx={{ position: "relative", width: 60, height: 60 }}>
-                      <Image
-                        src={product.images[0]}
-                        alt={product.title}
-                        fill
-                        style={{ objectFit: "cover", borderRadius: "4px" }}
-                      />
-                    </Box>
-                    <Typography>{product.title}</Typography>
-                  </Box>
-                </Link>
+        <Table
+          sx={{
+            width: "100%",
+            "& td, & th": {
+              whiteSpace: isMobile ? "normal" : "nowrap",
+              py: isMobile ? 1 : 2,
+              px: isMobile ? 1 : 3,
+            },
+          }}
+          stickyHeader
+          aria-label="products table"
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell
+                sx={{ fontWeight: "bold", minWidth: isMobile ? 150 : 200 }}
+              >
+                Product
               </TableCell>
-              <TableCell>{product.category.name}</TableCell>
-              <TableCell align="right">${product.price}</TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>Category</TableCell>
+              <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                Price
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableHead>
+          <TableBody>
+            {products.map((product) => (
+              <TableRow
+                key={product.id}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                  "&:hover": {
+                    backgroundColor: "action.hover",
+                  },
+                  transition: "background-color 0.2s",
+                }}
+              >
+                <TableCell>
+                  <Link
+                    href={`/products/${product.slug}`}
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      display: "block",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: isMobile ? 1 : 2,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          position: "relative",
+                          width: isMobile ? 40 : 60,
+                          height: isMobile ? 40 : 60,
+                        }}
+                      >
+                        <Image
+                          src={product.images[0]}
+                          alt={product.title}
+                          fill
+                          style={{ objectFit: "cover", borderRadius: "4px" }}
+                        />
+                      </Box>
+                      <Typography variant={isMobile ? "body2" : "body1"}>
+                        {product.title}
+                      </Typography>
+                    </Box>
+                  </Link>
+                </TableCell>
+                <TableCell>
+                  <Typography variant={isMobile ? "body2" : "body1"}>
+                    {product.category.name}
+                  </Typography>
+                </TableCell>
+                <TableCell align="right">
+                  <Typography variant={isMobile ? "body2" : "body1"}>
+                    ${product.price}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

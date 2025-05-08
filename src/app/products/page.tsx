@@ -124,11 +124,11 @@ const Index = () => {
         <Grid size={{ xs: 12 }}>
           <ProductTable products={getFilteredProducts()} />
         </Grid>
-        <Grid size={{ xs: 6 }}>
+        <Grid size={{ xs: 12, sm: 6 }}>
           <LimitSelect value={limit} onChange={(value) => setLimit(value)} />
         </Grid>
         <Grid
-          size={{ xs: 6 }}
+          size={{ xs: 12, sm: 6 }}
           sx={{ display: "flex", justifyContent: "flex-end" }}
         >
           <Pagination
